@@ -1,10 +1,10 @@
 site_name: Mac Mini M4 — Cuartel General
 site_description: Documentación de proyectos y empresas desplegadas en el Mac Mini M4
 site_author: MacMiniDoc
-site_url: https://tu-usuario.github.io/MacMiniDoc/
+site_url: https://molero86.github.io/MacMiniDoc/
 
-repo_name: tu-usuario/MacMiniDoc
-repo_url: https://github.com/tu-usuario/MacMiniDoc
+repo_name: molero86/MacMiniDoc
+repo_url: https://github.com/molero86/MacMiniDoc
 
 theme:
   name: material
