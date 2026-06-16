@@ -20,14 +20,44 @@ Ver [Agentes IA](agentes.md).
 
 Ver [Proyectos](proyectos/index.md).
 
-## Arquitectura de alto nivel
+## Stack tecnológico
+
+| Capa | Tecnología |
+|---|---|
+| Agentes | Python + LangGraph |
+| Modelos IA | Ollama (local, Mac Mini M4) |
+| Scheduler | APScheduler (cada 6 horas) |
+| Base de datos | PostgreSQL |
+| API | FastAPI |
+| Web | Next.js |
+| App | React Native (Expo) — iOS + Android |
+
+## Flujo de la redacción
 
 ```
-[Fuentes RSS / Web] 
-        ↓
-[Agente Recopilador] — extrae artículos
-        ↓
-[Agente Redactor]    — neutraliza tono, elimina clickbait
-        ↓
-[Agente Publicador]  — genera HTML y publica en la web
+[10 fuentes de León — RSS / Web]
+          ↓
+    Corresponsal       — extrae artículos nuevos cada 6h
+          ↓
+    Documentalista     — descarta duplicados (PostgreSQL)
+          ↓
+    Redactor           — destila y neutraliza (Ollama)
+          ↓
+    Jefe de Sección    — categoriza la noticia
+          ↓
+    Maquetador         — persiste en BD y expone vía API
+          ↓
+  [Web Next.js]  [App React Native]
+
+  ── Redactor Jefe orquesta todo el flujo (LangGraph) ──
 ```
+
+## Secciones
+
+- Local (León capital)
+- El Bierzo
+- Astorga y Comarca
+- Provincia
+- Sucesos
+- Cultura
+- Deportes
