@@ -10,7 +10,7 @@ Este repositorio sirve como fuente de verdad para las empresas, agentes IA y pro
 
 | Empresa | Descripción | Estado |
 |---|---|---|
-| [Noticias Claras](empresas/noticias-claras/index.md) | Agregador de noticias neutral, sin clickbait | 🚧 En construcción |
+| [El Alambique](empresas/el-alambique/index.md) | Periodismo destilado, sin sensacionalismo ni clickbait | 🚧 En construcción |
 | [Casa Inteligente](empresas/casa-inteligente/index.md) | Contabilidad y gestión del hogar | 🚧 En construcción |
 
 ---

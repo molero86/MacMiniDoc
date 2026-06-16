@@ -1,8 +1,8 @@
-# Noticias Claras
+# El Alambique
 
 ## Misión
 
-Agregar noticias de múltiples fuentes y reescribirlas de forma **neutral, rigurosa y sin clickbait**. El objetivo es ofrecer información periodística de calidad, generada y supervisada por agentes IA.
+Destilar noticias de múltiples fuentes eliminando el sensacionalismo y el clickbait, para entregar información periodística **pura, neutral y rigurosa**. Como un alambique separa la esencia del ruido, nuestros agentes IA extraen solo lo que importa.
 
 ## Descripción general
 

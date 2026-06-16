@@ -56,10 +56,10 @@ nav:
       - Red y servicios: servidor/red.md
   - Empresas:
       - Vista general: empresas/index.md
-      - Noticias Claras:
-          - Descripción: empresas/noticias-claras/index.md
-          - Agentes IA: empresas/noticias-claras/agentes.md
-          - Proyectos: empresas/noticias-claras/proyectos/index.md
+      - El Alambique:
+          - Descripción: empresas/el-alambique/index.md
+          - Agentes IA: empresas/el-alambique/agentes.md
+          - Proyectos: empresas/el-alambique/proyectos/index.md
       - Casa Inteligente:
           - Descripción: empresas/casa-inteligente/index.md
           - Agentes IA: empresas/casa-inteligente/agentes.md

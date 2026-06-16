@@ -1,4 +1,4 @@
-# Agentes IA — Noticias Claras
+# Agentes IA — El Alambique
 
 ## Agente Recopilador
 
