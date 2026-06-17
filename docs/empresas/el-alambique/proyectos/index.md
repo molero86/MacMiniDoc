@@ -21,6 +21,7 @@
 - expone artículos, secciones, búsqueda y detalle
 - ofrece endpoints internos para salud, métricas y revisión manual
 - actúa como capa de acceso a PostgreSQL para clientes externos
+- no escribe lógica editorial; consume la verdad ya preparada en `articles` y tablas auxiliares
 
 ### el-alambique-web
 
@@ -49,3 +50,12 @@
 | **el-alambique-api** | Exponga artículos publicados y filtros básicos por sección y fecha |
 | **el-alambique-web** | Permita leer la portada y el detalle de noticia con buena experiencia móvil y escritorio |
 | **el-alambique-app** | Permita consultar portada, secciones y detalle desde iOS y Android |
+
+## Dependencias de arranque
+
+| Proyecto | Depende primero de |
+|---|---|
+| **el-alambique-agents** | esquema PostgreSQL y configuración de fuentes |
+| **el-alambique-api** | tablas `articles`, `article_tags`, `sources` |
+| **el-alambique-web** | endpoints estables de portada, sección y detalle |
+| **el-alambique-app** | los mismos endpoints que la web |

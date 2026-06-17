@@ -16,6 +16,10 @@ Destilar noticias de múltiples fuentes eliminando el sensacionalismo y el click
 
 Ver [Agentes IA](agentes.md).
 
+## Base de datos
+
+Ver [Base de datos](bbdd.md).
+
 ## Proyectos
 
 Ver [Proyectos](proyectos/index.md).
@@ -76,7 +80,6 @@ Ver [Proyectos](proyectos/index.md).
 
 ## Qué queda por definir antes de programar
 
-- esquema exacto de la base de datos
 - feeds RSS reales disponibles por medio
 - modelo Ollama principal y modelo de reserva
 - política editorial para artículos incompletos o contradictorios

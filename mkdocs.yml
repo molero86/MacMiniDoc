@@ -59,6 +59,7 @@ nav:
       - El Alambique:
           - Descripción: empresas/el-alambique/index.md
           - Agentes IA: empresas/el-alambique/agentes.md
+          - Base de datos: empresas/el-alambique/bbdd.md
           - Fuentes: empresas/el-alambique/fuentes.md
           - Proyectos: empresas/el-alambique/proyectos/index.md
       - Casa Inteligente:
