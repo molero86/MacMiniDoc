@@ -22,7 +22,8 @@ La información previa era suficiente para entender la idea general, pero no par
 | **Quién inicia el proceso** | APScheduler |
 | **Quién coordina el flujo** | Redactor Jefe |
 | **Unidad de trabajo** | Un lote de artículos detectados en una ejecución |
-| **Modo de procesamiento** | Por lote, con procesamiento individual por artículo |
+| **Unidad editorial** | Una cobertura compuesta por varios artículos fuente |
+| **Modo de procesamiento** | Por lote, con agrupación previa en coberturas |
 | **Persistencia** | PostgreSQL |
 | **Consumo final** | API FastAPI, web Next.js y app React Native |
 
@@ -73,9 +74,9 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 1. Crea un `run_id` único para la ejecución.
 2. Carga la lista de fuentes activas.
 3. Llama al Corresponsal para obtener artículos candidatos.
-4. Envía esos candidatos al Documentalista para filtrar duplicados.
-5. Procesa cada artículo único con Redactor, Jefe de Sección y Maquetador.
-6. Registra métricas de la ejecución: cuántos artículos entraron, cuántos se descartaron y cuántos se publicaron.
+4. Envía esos candidatos al Documentalista para agruparlos en coberturas y descartar ruido.
+5. Procesa cada cobertura con Redactor, Jefe de Sección y Maquetador.
+6. Registra métricas de la ejecución: cuántos artículos entraron, cuántas coberturas se formaron y cuántas piezas se publicaron.
 
 ### Salida
 
@@ -84,7 +85,7 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 	"run_id": "uuid",
 	"sources_checked": 10,
 	"articles_found": 54,
-	"articles_unique": 21,
+	"story_clusters": 12,
 	"articles_published": 18,
 	"articles_failed": 3,
 	"status": "completed"
@@ -182,12 +183,12 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 | Campo | Detalle |
 |---|---|
 | **Cargo** | Documentalista |
-| **Rol técnico** | Deduplicador |
+| **Rol técnico** | Agrupador y deduplicador semántico |
 | **Se ejecuta** | Después del Corresponsal |
 | **Lo invoca** | Redactor Jefe |
 | **Invoca a** | PostgreSQL |
-| **Responsabilidad** | Compara los artículos nuevos contra la base de datos y descarta los ya procesados |
-| **Herramientas** | PostgreSQL (URL hash y similitud de título) |
+| **Responsabilidad** | Detecta qué artículos hablan del mismo acontecimiento, los agrupa en una cobertura y evita coberturas duplicadas ya publicadas |
+| **Herramientas** | PostgreSQL, similitud de título, reglas heurísticas y comparación semántica ligera |
 | **Modelo LLM** | No necesario |
 
 ### Entrada
@@ -201,18 +202,27 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 
 ### Qué hace
 
-1. Calcula un hash por URL original.
-2. Busca coincidencias exactas por URL.
-3. Busca similitudes por título normalizado.
-4. Marca cada candidato como `new`, `duplicate` o `review`.
-5. Devuelve solo los artículos que deben seguir el pipeline.
+1. Calcula hash y huellas básicas por URL y título.
+2. Busca duplicados exactos por URL o contenido claramente repetido.
+3. Detecta artículos relacionados entre sí por tema, entidades, tiempo y lugar.
+4. Agrupa esos artículos en una cobertura común.
+5. Comprueba si esa cobertura ya existe en la base de datos.
+6. Marca cada artículo y cada cobertura como `new`, `duplicate`, `update` o `review`.
+7. Devuelve coberturas listas para redacción, no artículos sueltos.
 
 ### Salida
 
 ```json
 {
 	"run_id": "uuid",
-	"unique_articles": [],
+	"story_clusters": [
+		{
+			"cluster_id": "uuid",
+			"topic_hint": "obras en el centro de leon",
+			"raw_article_ids": ["uuid-1", "uuid-2", "uuid-3"],
+			"status": "new"
+		}
+	],
 	"duplicates": [],
 	"manual_review": []
 }
@@ -222,6 +232,8 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 
 - tabla `article_fingerprints`
 - tabla `dedup_events`
+- tabla `story_clusters`
+- tabla `story_cluster_items`
 
 ### Si falla
 
@@ -237,11 +249,11 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 | Campo | Detalle |
 |---|---|
 | **Cargo** | Redactor |
-| **Rol técnico** | Destilador LLM |
-| **Se ejecuta** | Por cada artículo único |
+| **Rol técnico** | Redactor-sintetizador LLM |
+| **Se ejecuta** | Por cada cobertura nueva o actualizada |
 | **Lo invoca** | Redactor Jefe |
 | **Invoca a** | Ollama |
-| **Responsabilidad** | Reescribe el artículo en bruto de forma neutral, rigurosa y sin sensacionalismo |
+| **Responsabilidad** | Compone una pieza editorial única a partir de varias fuentes relacionadas, eliminando sensacionalismo y consolidando hechos |
 | **Herramientas** | Ollama (LLM local) |
 | **Modelo LLM** | Por definir (`llama3.1`, `qwen2.5` u otro) |
 
@@ -250,30 +262,48 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 ```json
 {
 	"run_id": "uuid",
-	"article_id": "uuid",
-	"original_title": "Titular original",
-	"raw_body": "Texto extraído...",
-	"source_name": "Diario de León"
+	"cluster_id": "uuid",
+	"topic_hint": "obras en el centro de leon",
+	"source_articles": [
+		{
+			"source_name": "Diario de León",
+			"original_title": "Titular original",
+			"raw_body": "Texto extraído..."
+		},
+		{
+			"source_name": "iLeon.com",
+			"original_title": "Otro titular",
+			"raw_body": "Otro texto extraído..."
+		}
+	]
 }
 ```
 
 ### Qué hace
 
-1. Recibe el texto bruto del artículo.
-2. Reescribe el titular para quitar sesgo, exageración o clickbait.
-3. Resume y limpia el cuerpo, manteniendo hechos verificables.
-4. Genera un resumen corto para listados y notificaciones.
-5. Devuelve texto listo para clasificación y publicación.
+1. Recibe un dossier con varios artículos fuente sobre el mismo hecho.
+2. Extrae hechos coincidentes y detecta diferencias relevantes entre medios.
+3. Redacta un titular neutro basado en el conjunto, no en una sola fuente.
+4. Compone un cuerpo único, consolidado y sin clickbait.
+5. Genera un resumen corto para listados y notificaciones.
+6. Devuelve también la lista de fuentes usadas y posibles contradicciones detectadas.
 
 ### Salida
 
 ```json
 {
-	"article_id": "uuid",
+	"cluster_id": "uuid",
 	"clean_title": "Titular neutral",
 	"clean_body": "Artículo destilado...",
 	"short_summary": "Resumen de 2 líneas",
-	"editor_notes": "Sin cifras no verificadas"
+	"editor_notes": "Sin cifras no verificadas",
+	"source_count": 3,
+	"source_attributions": [
+		"Diario de León",
+		"iLeon.com",
+		"La Nueva Crónica"
+	],
+	"contradictions": []
 }
 ```
 
@@ -283,6 +313,8 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 - no añadir opiniones
 - no ocultar incertidumbre si la fuente original la contiene
 - mantener nombres propios, fechas y cifras cuando estén en la fuente
+- priorizar los hechos coincidentes cuando varias fuentes cubren el mismo asunto
+- si dos fuentes discrepan, reflejar la discrepancia o dejarla en notas internas
 
 ### Si falla
 
@@ -312,7 +344,7 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 
 ```json
 {
-	"article_id": "uuid",
+	"cluster_id": "uuid",
 	"clean_title": "Titular neutral",
 	"clean_body": "Artículo destilado..."
 }
@@ -323,13 +355,14 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 1. Lee el titular y el cuerpo ya destilados.
 2. Determina la sección principal.
 3. Añade etiquetas secundarias útiles para búsqueda.
-4. Devuelve una clasificación con confianza.
+4. Puede ajustar el foco geográfico de la cobertura si las fuentes mezclan varias zonas.
+5. Devuelve una clasificación con confianza.
 
 ### Salida
 
 ```json
 {
-	"article_id": "uuid",
+	"cluster_id": "uuid",
 	"section": "Local",
 	"tags": ["ayuntamiento", "movilidad"],
 	"confidence": 0.92
@@ -366,14 +399,14 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 
 ```json
 {
-	"article_id": "uuid",
+	"cluster_id": "uuid",
 	"clean_title": "Titular neutral",
 	"clean_body": "Artículo destilado...",
 	"short_summary": "Resumen de 2 líneas",
 	"section": "Local",
 	"tags": ["ayuntamiento", "movilidad"],
-	"source_name": "Diario de León",
-	"original_url": "https://..."
+	"source_attributions": ["Diario de León", "iLeon.com"],
+	"primary_source_url": "https://..."
 }
 ```
 
@@ -382,7 +415,8 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 1. Inserta o actualiza el artículo final en la base de datos.
 2. Genera `slug`, fecha editorial y estado de publicación.
 3. Marca el artículo como disponible para la API.
-4. Deja trazabilidad hacia la fuente original.
+4. Guarda las relaciones entre la pieza editorial y todos los artículos fuente utilizados.
+5. Deja trazabilidad hacia cada fuente original.
 
 ### Salida
 
@@ -398,6 +432,7 @@ El scheduler solo despierta al **Redactor Jefe**. Ningún otro agente se ejecuta
 ### Persistencia
 
 - tabla `articles`
+- tabla `article_sources`
 - tabla `publication_events`
 
 ### Si falla
@@ -415,12 +450,12 @@ Para implementar LangGraph sin ambigüedad, el estado compartido de la ejecució
 	"scheduled_at": "datetime",
 	"sources": [],
 	"raw_articles": [],
-	"unique_articles": [],
+	"story_clusters": [],
 	"processed_articles": [],
 	"failed_articles": [],
 	"metrics": {
 		"found": 0,
-		"unique": 0,
+		"clusters": 0,
 		"published": 0,
 		"failed": 0
 	}

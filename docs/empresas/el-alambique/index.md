@@ -45,6 +45,7 @@ Ver [Proyectos](proyectos/index.md).
 | **Modo de ingesta** | RSS cuando exista; scraping cuando no exista |
 | **Cadencia** | Un job cada 6 horas |
 | **Patrón de orquestación** | Scheduler -> Redactor Jefe -> resto de agentes |
+| **Unidad editorial real** | Una cobertura compuesta a partir de varias fuentes relacionadas |
 | **Persistencia obligatoria** | Todos los artículos procesados y eventos del pipeline |
 | **Canales de salida** | API, web y app móvil |
 
@@ -55,9 +56,9 @@ Ver [Proyectos](proyectos/index.md).
           ↓
     Corresponsal       — extrae artículos nuevos cada 6h
           ↓
-    Documentalista     — descarta duplicados (PostgreSQL)
+    Documentalista     — agrupa artículos en coberturas
           ↓
-    Redactor           — destila y neutraliza (Ollama)
+    Redactor           — redacta una pieza compuesta desde varias fuentes
           ↓
     Jefe de Sección    — categoriza la noticia
           ↓
@@ -67,6 +68,15 @@ Ver [Proyectos](proyectos/index.md).
 
   ── Redactor Jefe orquesta todo el flujo (LangGraph) ──
 ```
+
+## Regla editorial estructural
+
+El Alambique no publicará una pieza por cada artículo detectado. La unidad de publicación será una **cobertura** o **historia**:
+
+- varios artículos de distintos medios pueden pertenecer a la misma cobertura
+- el sistema evita publicar duplicados sobre el mismo hecho
+- el Redactor compone una única pieza editorial usando varias fuentes del mismo acontecimiento
+- siempre debe mantenerse trazabilidad hacia todas las fuentes utilizadas
 
 ## Secciones
 
