@@ -32,6 +32,18 @@ Ver [Proyectos](proyectos/index.md).
 | Web | Next.js |
 | App | React Native (Expo) — iOS + Android |
 
+## Decisiones operativas actuales
+
+| Tema | Decisión |
+|---|---|
+| **Ámbito geográfico inicial** | León capital, provincia, Bierzo y Astorga |
+| **Fuentes iniciales** | 10 medios definidos en la documentación de fuentes |
+| **Modo de ingesta** | RSS cuando exista; scraping cuando no exista |
+| **Cadencia** | Un job cada 6 horas |
+| **Patrón de orquestación** | Scheduler -> Redactor Jefe -> resto de agentes |
+| **Persistencia obligatoria** | Todos los artículos procesados y eventos del pipeline |
+| **Canales de salida** | API, web y app móvil |
+
 ## Flujo de la redacción
 
 ```
@@ -61,3 +73,11 @@ Ver [Proyectos](proyectos/index.md).
 - Sucesos
 - Cultura
 - Deportes
+
+## Qué queda por definir antes de programar
+
+- esquema exacto de la base de datos
+- feeds RSS reales disponibles por medio
+- modelo Ollama principal y modelo de reserva
+- política editorial para artículos incompletos o contradictorios
+- reglas de priorización si entran demasiadas noticias en un mismo lote
