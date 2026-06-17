@@ -17,6 +17,10 @@ La base de datos de El Alambique debe cubrir cuatro necesidades desde el primer 
 | **Motivo principal** | Buen soporte relacional, búsquedas, índices y crecimiento futuro |
 | **Uso inicial** | Fuente de verdad única para agentes, API y clientes |
 
+## Artefacto ejecutable
+
+El primer borrador ejecutable del esquema está en la carpeta `sql/el-alambique/schema.sql` del repositorio.
+
 ## Principios de diseño
 
 - no perder el enlace con la fuente original
@@ -60,7 +64,7 @@ Registra cada ejecución programada del Redactor Jefe.
 | `status` | VARCHAR | `running`, `completed`, `partial_failure`, `failed` |
 | `sources_checked` | INTEGER | Fuentes visitadas |
 | `articles_found` | INTEGER | Artículos detectados |
-| `articles_unique` | INTEGER | Tras deduplicación |
+| `story_clusters_detected` | INTEGER | Coberturas formadas o actualizadas |
 | `articles_published` | INTEGER | Publicados |
 | `articles_failed` | INTEGER | Fallidos |
 | `error_summary` | TEXT NULL | Resumen del lote |
