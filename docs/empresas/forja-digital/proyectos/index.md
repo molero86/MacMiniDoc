@@ -18,3 +18,17 @@
 
 El primer proyecto ejecutado por Forja Digital será **El Alambique**.  
 Si El Alambique llega a producción con este framework, Forja quedará validada como factoría reutilizable.
+
+### Estado actual del piloto
+
+El scaffold de Forja Lite ya se ha ejecutado en este repositorio y ha generado la base inicial del proyecto en `el-alambique/`.
+
+## Build Inicial En Este Repositorio
+
+Para empezar a construir Forja Digital desde hoy, se añade una base de trabajo local en:
+
+- `forja-delivery-lite/scaffold_project.py`
+- `forja-delivery-lite/forja_blueprint.example.yaml`
+- `forja-delivery-lite/requirements.txt`
+
+Esta base permite generar rápidamente la estructura inicial de un nuevo proyecto con convenciones de Forja Lite.

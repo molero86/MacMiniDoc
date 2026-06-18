@@ -73,4 +73,6 @@ nav:
       - Forja Digital:
           - Descripción: empresas/forja-digital/index.md
           - Agentes IA: empresas/forja-digital/agentes.md
+          - Modelo operativo: empresas/forja-digital/modelo-operativo.md
+          - Gobierno y KPIs: empresas/forja-digital/gobierno-kpis.md
           - Proyectos: empresas/forja-digital/proyectos/index.md

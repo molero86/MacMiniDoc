@@ -1,0 +1,4 @@
+quality_gates:
+  min_test_coverage: 70
+  require_lint: true
+  require_readme: true

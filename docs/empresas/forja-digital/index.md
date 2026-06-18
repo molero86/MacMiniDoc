@@ -11,6 +11,7 @@ Operar una factoría de software end-to-end: detectar oportunidades de negocio, 
 | **Sector** | Venture builder / Product studio |
 | **Estado** | 🚧 En construcción |
 | **Stack IA** | Ollama + LangGraph |
+| **Modelo operativo** | Forja Lite -> Forja Escalable |
 
 ## Equipo de agentes
 
@@ -19,6 +20,14 @@ Ver [Agentes IA](agentes.md).
 ## Proyectos
 
 Ver [Proyectos](proyectos/index.md).
+
+## Modelo operativo
+
+Ver [Modelo operativo](modelo-operativo.md).
+
+## Gobierno y KPIs
+
+Ver [Gobierno y KPIs](gobierno-kpis.md).
 
 ## Arquitectura de alto nivel
 
@@ -50,3 +59,12 @@ Antes de construir la factoría completa, se operará una versión **Lite** enfo
 ### Criterio de éxito de Forja Lite
 
 Forja Lite se considera lista cuando permite ejecutar de principio a fin un producto real (El Alambique) sin bloqueos metodológicos.
+
+## Alcance de la fase actual
+
+En esta fase se construirá solo lo imprescindible para operar un primer producto con calidad:
+
+- sistema de fases y compuertas (gates)
+- contratos de entrada/salida por agente
+- métricas semanales de ejecución
+- utilidades de scaffolding para arrancar proyectos rápidamente

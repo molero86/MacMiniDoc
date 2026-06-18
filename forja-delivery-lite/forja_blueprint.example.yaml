@@ -1,0 +1,23 @@
+project:
+  name: el-alambique
+  company: forja-digital
+  description: Producto periodistico de noticias destiladas multi-fuente
+  owner: product-owner
+
+stack:
+  backend: fastapi
+  database: postgresql
+  web: nextjs
+  mobile: react-native
+
+modules:
+  - agents
+  - api
+  - web
+  - app
+  - infra
+
+quality_gates:
+  min_test_coverage: 70
+  require_lint: true
+  require_readme: true
