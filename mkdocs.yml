@@ -62,7 +62,15 @@ nav:
           - Base de datos: empresas/el-alambique/bbdd.md
           - Fuentes: empresas/el-alambique/fuentes.md
           - Proyectos: empresas/el-alambique/proyectos/index.md
-      - Casa Inteligente:
-          - Descripción: empresas/casa-inteligente/index.md
-          - Agentes IA: empresas/casa-inteligente/agentes.md
-          - Proyectos: empresas/casa-inteligente/proyectos/index.md
+      - Domus Gestión:
+          - Descripción: empresas/domus-gestion/index.md
+          - Agentes IA: empresas/domus-gestion/agentes.md
+          - Proyectos: empresas/domus-gestion/proyectos/index.md
+      - Argos Capital:
+          - Descripción: empresas/argos-capital/index.md
+          - Agentes IA: empresas/argos-capital/agentes.md
+          - Proyectos: empresas/argos-capital/proyectos/index.md
+      - Forja Digital:
+          - Descripción: empresas/forja-digital/index.md
+          - Agentes IA: empresas/forja-digital/agentes.md
+          - Proyectos: empresas/forja-digital/proyectos/index.md

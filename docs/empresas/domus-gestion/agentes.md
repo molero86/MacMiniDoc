@@ -1,6 +1,6 @@
-# Agentes IA — Casa Inteligente
+# Agentes IA — Domus Gestión
 
-## Agente Importador
+## Contable de Datos
 
 | Campo | Detalle |
 |---|---|
@@ -10,7 +10,7 @@
 | **Herramientas** | `pandas`, OCR (por definir) |
 | **Modelo LLM** | Opcional para extracción de PDFs complejos |
 
-## Agente Clasificador
+## Clasificador Fiscal
 
 | Campo | Detalle |
 |---|---|
@@ -20,7 +20,7 @@
 | **Herramientas** | LLM local vía Ollama |
 | **Modelo LLM** | Por definir |
 
-## Agente Analista
+## Analista Financiero
 
 | Campo | Detalle |
 |---|---|
