@@ -59,3 +59,29 @@
 | **el-alambique-api** | tablas `articles`, `article_tags`, `sources` |
 | **el-alambique-web** | endpoints estables de portada, sección y detalle |
 | **el-alambique-app** | los mismos endpoints que la web |
+
+## Plan de ejecución (30 días)
+
+### Semana 1
+
+- cerrar fuentes de entrada y validar RSS/scraping por medio
+- preparar entorno y esquema PostgreSQL
+- scaffold de `el-alambique-agents`
+
+### Semana 2
+
+- implementar Corresponsal + Documentalista + agrupación en coberturas
+- ejecutar jobs cada 6 horas
+- persistir resultados de pipeline y errores
+
+### Semana 3
+
+- implementar Redactor + Jefe de Sección + Maquetador
+- habilitar `el-alambique-api` con endpoints base
+- publicar una web inicial de lectura
+
+### Semana 4
+
+- ajustar calidad editorial y deduplicación
+- mejorar observabilidad y alertas
+- preparar backlog de `el-alambique-app`

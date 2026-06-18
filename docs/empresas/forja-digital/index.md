@@ -35,3 +35,18 @@ Ver [Proyectos](proyectos/index.md).
         ↓
 [Growth Lead IA]         — marketing, posicionamiento y adquisición
 ```
+
+## Forja Digital Lite (fase de arranque)
+
+Antes de construir la factoría completa, se operará una versión **Lite** enfocada a ejecutar El Alambique como proyecto piloto.
+
+### Entregables mínimos
+
+- Flujo operativo único: idea -> PRD -> arquitectura -> build -> release.
+- Plantilla PRD estándar para todos los proyectos.
+- Checklist de arquitectura y calidad mínima antes de desarrollar.
+- Checklist de lanzamiento y seguimiento post-release.
+
+### Criterio de éxito de Forja Lite
+
+Forja Lite se considera lista cuando permite ejecutar de principio a fin un producto real (El Alambique) sin bloqueos metodológicos.
